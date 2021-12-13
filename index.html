@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <base href="/"><!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async="" src="https://www.googletagmanager.com/gtag/js?id=G-5SG0KRSQDH"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-5SG0KRSQDH');
+    </script>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="Puedes verificar la aplicación de tu vacuna contra el coronavirus u otras que hayas recibido recientemente en el Carné de vacunación web del Ministerio de Salud. Aquí, está registrada la fecha y lugar donde se te inmunizó, además del tipo de vacuna que recibiste, el fabricante de la vacuna y el número de lote.">
+    <meta name="keywords" content="Carnet Vacunas, Minsa, Covid19">
+    <meta name="author" content="Minsa Perú">
+    <meta http-equiv="Expires" content="0">
+    <meta http-equiv="Last-Modified" content="0">
+    <meta http-equiv="Cache-Control" content="no-cache, mustrevalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <title>MINSA - Carnet Vacunación</title>
+    <link rel="apple-touch-icon" sizes="57x57" href="static/favicons/apple-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="static/favicons/apple-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="static/favicons/apple-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="static/favicons/apple-icon-76x76.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="static/favicons/apple-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="static/favicons/apple-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="static/favicons/apple-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="static/favicons/apple-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="static/favicons/apple-icon-180x180.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="static/favicons/android-icon-192x192.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="static/favicons/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="96x96" href="static/favicons/favicon-96x96.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="static/favicons/favicon-16x16.png">
+    <link rel="shortcut icon" type="image/x-icon" href="static/favicons/favicon.ico">
+    <link rel="manifest" href="static/favicons/manifest.json">
+    <meta name="msapplication-TileColor" content="#b7e3e4">
+    <meta name="msapplication-TileImage" content="static/favicons/ms-icon-144x144.png">
+    <meta name="theme-color" content="#b7e3e4">
+    <link id="app-template" rel="stylesheet" href="static/css/app20211210.min.css">
+    <script id="js_qrious" src="https://carnetvacunacion.minsa.gob.pe/static/js/lib/qrious/4.0.2/qrious.min.js"></script>
+</head>
+
+<body>
+    <div class="app" id="japp">
+        <style>
+            /*GENERAL*/
+            body {
+                font-family: sans-serif;
+                font-size: 1rem;
+                line-height: 1.2em;
+                margin: 0;
+                background: #e4e4e4;
+            }
+
+            * {
+                box-sizing: border-box;
+            }
+
+            #japp {
+                display: inline-block;
+            }
+
+            .hide {
+                display: none;
+            }
+
+            .show {
+                display: block;
+            }
+
+            /*DISEÑO PARA CELULARES*/
+            .m-page-container {
+                padding: 20px;
+                max-width: 900px;
+                margin: 0 auto;
+                background: #fff;
+            }
+
+            .titulo {
+                color: #75a5d0;
+                text-align: center;
+                font-weight: bold;
+                padding: 0.5rem 0.2rem;
+            }
+
+            .txt-titulo {
+                font-weight: bold;
+            }
+
+            .txt-resultado {
+                font-size: 0.8rem;
+            }
+
+            .logo {
+                text-align: center;
+            }
+
+            .logo img {
+                width: 100%;
+                max-width: 17rem;
+            }
+
+            .linea {
+                display: block;
+                border: none;
+                margin-top: 8px;
+                margin-bottom: 8px;
+                margin-left: auto;
+                margin-right: auto;
+                border-top: #e2e2e2 dashed 1px;
+            }
+
+            .aLine1 {
+                border: none;
+                border-bottom: #dedede dashed 1px;
+                margin: 1rem 0.1rem;
+                padding: 0;
+                width: 100%;
+              }
+
+            .caja-vacunas {
+                border: #c8d5d5 solid 5px;
+                padding: 0.5rem;
+                margin-top: 0.5rem;
+            }
+
+            /*DISEÑO PARA COMPUTADORAS*/
+            .d-page-container {
+                padding: 30px;
+                max-width: 900px;
+                margin: 2rem auto;
+                background: #fff;
+                border: #ccc solid 1px;
+                box-shadow: 0 0 15px rgba(0, 0, 0, .25);
+            }
+
+            .table-container {
+                overflow-x: auto;
+            }
+
+            .table-certificado {
+                border-spacing: 0;
+                width: 100%;
+                min-width: 600px;
+            }
+
+            .table-certificado thead th,
+            .table-certificado tbody td {
+                padding: 0.5rem;
+                word-wrap: break-word;
+            }
+
+            .table-certificado thead th {
+                border-bottom: 1px solid #75a5d0;
+            }
+
+            .table-certificado tbody td {
+                border-bottom: 1px solid #75a5d0;
+                border-right: 1px solid #75a5d0;
+                height: 65px;
+            }
+
+            .table-certificado tbody td:last-child {
+                border-right: none;
+            }
+
+            .texto,
+            .data {
+                font-size: 0.8rem;
+            }
+
+            .subtitulo {
+                font-weight: bold;
+            }
+
+            .table-data {
+                border: solid 1px #E5E7E9;
+                border-spacing: 0;
+                font-size: 0.75rem;
+                text-align: center;
+                width: 100%;
+            }
+
+            .table-data thead th {
+                border: 1px solid #E5E7E9;
+                height: 50px;
+            }
+
+            .table-data tbody td {
+                border: 1px solid #E5E7E9;
+                height: 50px;
+            }
+
+            /*PRINT*/
+            .btn2 {
+               background: #666;
+               color: #f7f7f7;
+               border: #686767 solid 1px;
+             }
+
+             .btn {
+               width: 100%;
+               padding: 0.8rem 0.5rem;
+               cursor: pointer;
+               border-radius: 1.3rem;
+             }
+
+            @media print {
+                .d-page-container {
+                    border: none;
+                    box-shadow: none;
+                }
+
+                #jPnlCelular {
+                    display: none;
+                }
+
+                #jPnlEscritorio {
+                    display: block;
+                }
+
+                .jHidePrint {
+                    display: none;
+                }
+
+            }
+        </style>
+        <section class="hide" id="jPnlCelular">
+            <div class="m-page-container">
+                <div class="logo"><img src="https://carnetvacunacion.minsa.gob.pe/1639328153995app/publico/certificado/img/logo_minsa.jpg" alt="Ministerio de Salud - MINSA | Gobierno del Perú"></div>
+                <div class="titulo">CERTIFICADO DE VACUNACI&Oacute;N / VACCINATION CERTIFICATE</div>
+                <div style="text-align: center; padding: 0.5rem 0;"><canvas height="250" id="jQRCelular" style="width: 200px; margin: 0 auto;" width="250"><br></canvas></div>
+                <hr class="linea">
+                <div class="txt-titulo">Nombre / Name</div>
+                <div class="txt-resultado">PALACIOS TORRES JUAN PABLO</div>
+                <hr class="linea">
+                <div class="txt-titulo">Documento de Identidad / Identification document</div>
+                <div class="txt-resultado">DNI: 76601365</div>
+                <hr class="linea">
+                <div class="txt-titulo">Fecha de Nacimiento / Date of birth</div>
+                <div class="txt-resultado">27/11/2001</div>
+                <hr class="linea">
+                <div class="txt-titulo">Sexo / Sex</div>
+                <div class="txt-resultado">M</div>
+                <hr class="linea">
+                <div class="txt-titulo">Nacionalidad / Nationality</div>
+                <div class="txt-resultado">PERU</div>
+                <hr class="linea">
+                <div class="txt-titulo">Vacuna / Vaccine</div>
+                <div class="txt-resultado">Vacuna contra Covid</div>
+                <hr class="linea">
+                <div class="txt-titulo">Vacunado / Vaccinated</div>
+                <div class="txt-resultado"><br></div>
+                <div>
+                    <div class="caja-vacunas">
+                        <div class="txt-titulo" style="color: #848f8f;">Dosis / Dose</div>
+                        <div class="txt-resultado">1&ordf; dosis</div>
+                        <hr class="linea">
+                        <div class="txt-titulo">Fecha de Vacunaci&oacute;n / Vaccination Date</div>
+                        <div class="txt-resultado">06/12/2021</div>
+                        <hr class="linea">
+                        <div class="txt-titulo">Fabricante y Lote de Vacuna / Product Name and Manufacturer Lot Number</div>
+                        <div class="txt-resultado">ASTRAZENECA (77883)</div>
+                        <hr class="linea">
+                        <div class="txt-titulo">Lugar de Vacunaci&oacute;n / Vaccination Place</div>
+                        <div class="txt-resultado">LIMA SUR - Vacunacar 2 Costa Verde (Acudir Solo En Carro) - LIMA LIMA CHORRILLOS</div>
+                    </div>
+                </div>
+                <hr class="linea">
+                <div class="txt-titulo">Certificado emitido por / Certificate issued by</div>
+                <div class="txt-resultado">Ministerio de Salud del Per&uacute;</div>
+                <div style="border-top:#d7dadd dashed 1px; margin-top: 1rem; padding-top: 0.5rem; color: rgb(145, 141, 141);">
+                    <!--<div>Emisión / Issue</div><div>13/12/2021 12:08:04 PM</div><div style="padding: 0.5rem 0 0;">Expiración / Due</div><div>13/12/2021 12:08:04 PM</div>-->
+                    <div class="txt-titulo">Fecha de Emisi&oacute;n / Date of Issue</div>
+                    <div class="txt-resultado">13/12/2021 12:08</div>
+                </div>
+            </div>
+            <div class="text-center" style="padding:1rem 0.2rem 0.3rem;"><button class="btn btn2 jBtnPrint" type="button">IMPRIMIR</button></div>
+            <div class="text-center" style="color:#5c5c5c; padding:0 0.2rem 0.7rem; font-size:0.8rem;">
+                <hr class="aLine1" style="width:100%;">Copyright &copy; 2021. Desarrollado por la Oficina General de Tecnolog&iacute;as de la Informaci&oacute;n del Ministerio de Salud | Todos los derechos reservados.</div>
+        </section>
+        <section id="jPnlEscritorio">
+            <div class="d-page-container">
+                <div class="table-container">
+                    <table class="table-certificado">
+                        <thead>
+                            <tr>
+                                <th colspan="3">
+                                    <div class="logo"><img class="logo-minsa" src="https://carnetvacunacion.minsa.gob.pe/1639328153995app/publico/certificado/img/logo_minsa.jpg" alt="Ministerio de Salud - MINSA | Gobierno del Perú"></div>
+                                    <div class="titulo" style="padding: 0.8rem 0;">CERTIFICADO DE VACUNACI&Oacute;N / VACCINATION CERTIFICATE</div>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td style="vertical-align: top; width: 35%;"><span class="texto subtitulo">&nbsp;Nombre / Name&nbsp;</span><br><label class="data">PALACIOS TORRES JUAN PABLO&nbsp;</label></td>
+                                <td style="vertical-align: top; width: 35%;"><span class="texto subtitulo">&nbsp;Fecha de Nacimiento / Date of birth&nbsp;</span><br><label class="data" id="fecha-nacimiento">27/11/2001</label></td>
+                                <td rowspan="3" style="vertical-align: top; width: 30%;"><canvas height="250" id="jQREscritorio" width="250"><br></canvas></td>
+                            </tr>
+                            <tr>
+                                <td style="vertical-align: top;"><span class="texto subtitulo">Documento de Identidad / Identification document</span><br><label class="data" id="tipo-numero-documento">DNI: 76601365</label></td>
+                                <td style="vertical-align: top; border-right: 1px solid #75a5d0;"><span class="texto subtitulo">Nacionalidad / Nationality</span><br><label class="data" id="nacionalidad">PERU</label></td>
+                            </tr>
+                            <tr>
+                                <td style="vertical-align: top;"><span class="texto subtitulo">Sexo / Sex&nbsp;</span><br><label class="data" id="sexo">M</label></td>
+                                <td style="vertical-align: top; border-right: 1px solid #75a5d0;"><span class="texto subtitulo">Vacuna / Vaccine</span><br><label class="data" id="nacionalidad">Vacuna contra Covid</label></td>
+                            </tr>
+                            <tr>
+                                <td colspan="3" style="width: 100%; border-right: 0;vertical-align: top; padding-top: 1.5rem;"><span class="texto">Vacunado / Vaccinated</span> <span class="texto virus">&nbsp;</span>
+                                    <table class="table-data">
+                                        <thead>
+                                            <tr>
+                                                <th style="width: 15%;">Fecha de Vacunaci&oacute;n / Vaccination Date</th>
+                                                <th style="width: 10%;">Dosis / Dose</th>
+                                                <th style="width: 40%;">Fabricante y Lote de Vacuna / Product Name and Manufacturer Lot Number</th>
+                                                <th style="width: 35%;">Lugar de Vacunaci&oacute;n / Vaccination Place</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>06/10/2021</td>
+                                                <td>1&ordf; dosis</td>
+                                                <td>ASTRAZENECA (77883)</td>
+                                                <td>LIMA SUR - Vacunacar 2 Costa Verde (Acudir Solo En Carro) - LIMA LIMA CHORRILLOS</td>
+                                            </tr>
+                                            <tr>
+                                                <td>05/11/2021</td>
+                                                <td>2&ordf; dosis</td>
+                                                <td>ASTRAZENECA (90734)</td>
+                                                <td>LIMA SUR - Vacunacar 2 Costa Verde (Acudir Solo En Carro) - LIMA LIMA CHORRILLOS</td>
+                                            </tr>
+                                        </tbody>
+                                    </table><br>
+                                </td>
+                            </tr>
+
+
+                            <tr>
+                                <td colspan="3" style="width: 100%; border-bottom: 0; vertical-align: top; color: rgb(99, 99, 99);">
+                                    <div style="float: left;"><span class="texto subtitulo">Certificado emitido por / Certificate issued by:</span><br><label class="data" id="fecha-emision">Ministerio de Salud del Per&uacute;</label></div>
+                                    <div style="float: right; text-align: right;">
+                                        <div class="texto subtitulo">Fecha de Emisi&oacute;n / Date of Issue</div>
+                                        <div class="data">13/12/2021 12:08</div><!-- <span class="texto subtitulo">Emisión / Issue :</span> <label id="fecha-emision" class="data">13/12/2021 12:08:04 PM</label> <br><span class="texto subtitulo">Expiración / Due :</span> <label id="fecha-emision" class="data">13/12/2021 12:08:04 PM</label> -->
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <hr class="aLine1">
+                <div class="text-center" style="color:#5c5c5c; padding:0 0.2rem; font-size:0.8rem; text-align:center;">Copyright &copy; 2021. Desarrollado por la Oficina General de Tecnolog&iacute;as de la Informaci&oacute;n del Ministerio de Salud | Todos los derechos reservados.</div>
+                <div class="row jHidePrint">
+                    <hr class="aLine1">
+                    <div class="col-4"><br></div>
+                    <div class="col-4"><button class="btn btn2 jBtnPrint" type="button">IMPRIMIR</button></div>
+                    <div class="col-4"><br></div>
+                </div>
+            </div>
+        </section>
+    </div>
+    <script type="module" src="1639328153995app/index.js"></script>
+    <script nomodule="">
+        document.location.href = 'error-compatibilidad.html';
+    </script>
+</body>
+
+</html>
